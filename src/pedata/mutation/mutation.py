@@ -606,15 +606,15 @@ class Mutation:
 
         """
 
-        # input_mut = mut  # Stores the original dataset before further modifications
+        input_mut = mut  # Stores the original dataset before further modifications
 
         # Handle Dataset input
         if isinstance(mut, ds.Dataset):
             # Find all existig columns
             existing_columns = set(mut.features.keys())
-            if "aa_seq" in existing_columns:
-                if "aa_mut" in existing_columns:
-                    mut_column = "aa_mut"
+            # if "aa_seq" in existing_columns:
+                # if "aa_mut" in existing_columns:
+                    # mut_column = "aa_mut"
 
             if "dna_seq" in existing_columns:
                 if "dna_mut" in existing_columns:

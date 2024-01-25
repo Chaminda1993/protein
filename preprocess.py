@@ -62,7 +62,7 @@ def get_all_encodings(
         print("Reducing")
         if "," in target:
             target = target.split(",")
-        reduce_data(filename, aa_seqname, target, dna_seqname=dna_seqname)
+        # reduce_data(filename, aa_seqname, target, dna_seqname=dna_seqname)
 
 
 if __name__ == "__main__":
