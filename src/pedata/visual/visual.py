@@ -29,7 +29,6 @@ import os
 
 2
 
-
 def plot_target_distribution(
     target: np.array,
     label: str = "target",
@@ -67,7 +66,6 @@ def plot_target_distribution(
         plt.savefig(f"{savedir}/figures/distribution_{label}.png")
     plt.close()
 
-
 def plot_target_distributions(target_dict, savedir=None, label=None):
     """
     Runs plot_target_distribution for all targets in the target_dict
@@ -96,7 +94,6 @@ def plot_target_distributions(target_dict, savedir=None, label=None):
 
     for t_name, t_data in target_dict.items():
         plot_target_distribution(t_data, label=f"{label}_{t_name}", savedir=savedir)
-
 
 if __name__ == "__main__":
     pass

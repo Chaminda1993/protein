@@ -1,7 +1,6 @@
 from typing import Callable
 from .base import EncodingSpec
 
-
 def find_function_order(
     encoders: list[EncodingSpec],
     provided_encodings: list[str],
@@ -110,7 +109,6 @@ def find_function_order(
                     )
 
                 check_function(encoding_functions[encoding])
-
     def check_function(function: Callable):
         """
         Check if all function's encodings meet their requirements.
@@ -124,7 +122,6 @@ def find_function_order(
             check_encoding(encodings_required[function])
             provided_encodings.extend(encodings_provided[function])
             sorted_list.append(function)
-
     check_encoding(required_encodings)
 
     if satisfy_all:

@@ -13,11 +13,9 @@ from sklearn.base import BaseEstimator, TransformerMixin
 from ..config.alphabets import padding_value_enc
 from Bio.Seq import Seq
 
-
 def array_to_list_of_arrays(x: onp.ndarray):
     """Convert a 2d array into a list of arrays."""
     return [r for r in x]
-
 
 def seq_strings_to_array(
     seq_strings: Union[onp.ndarray, list[str]], pad=False, pad_char="?"
@@ -50,7 +48,6 @@ def seq_strings_to_array(
 
     return onp.array(tmp)
 
-
 def unirep(df: Union[ds.Dataset, pd.DataFrame]) -> dict[str, onp.ndarray]:
     """Add unirep encoding to a dataframe.
 
@@ -62,7 +59,6 @@ def unirep(df: Union[ds.Dataset, pd.DataFrame]) -> dict[str, onp.ndarray]:
     """
     h_avg, h_final, c_final = get_reps(df["aa_seq"])
     return {"aa_unirep_1900": h_avg.tolist(), "aa_unirep_final": h_final.tolist()}
-
 
 def translate_dna_to_aa_seq(dataset: ds.Dataset) -> ds.Dataset:
     """Translate DNA sequences to amino acid sequences.
@@ -130,7 +126,6 @@ def translate_dna_to_aa_seq(dataset: ds.Dataset) -> ds.Dataset:
     # Return encodings
     return {"aa_seq": encoded_dataset["aa_seq"]}
 
-
 class FixedSingleColumnTransform(TransformerMixin):
     """SKLearn Transformer that transforms a single column of a dataframe"""
 
@@ -145,7 +140,6 @@ class FixedSingleColumnTransform(TransformerMixin):
         self.inner_transformer = inner_transformer
         if hasattr(self.inner_transformer, "map_func"):
             self.map_func = self.inner_transformer.map_func
-
     def drop_non_column(
         self, X: Union[pd.DataFrame, ds.Dataset]
     ) -> Union[pd.DataFrame, ds.Dataset]:
@@ -163,7 +157,6 @@ class FixedSingleColumnTransform(TransformerMixin):
             return X[self.column_name]
         else:
             return X
-
     def fit(
         self, X: Union[pd.DataFrame, ds.Dataset], **fit_params
     ) -> "FixedSingleColumnTransform":
@@ -177,7 +170,6 @@ class FixedSingleColumnTransform(TransformerMixin):
         """
         self.inner_transformer.fit(self.drop_non_column(X), **fit_params)
         return self.__class__
-
     def transform(
         self, X: Union[pd.DataFrame, ds.Dataset]
     ) -> Union[pd.DataFrame, ds.Dataset]:
@@ -191,7 +183,6 @@ class FixedSingleColumnTransform(TransformerMixin):
         """
         return self.inner_transformer.transform(self.drop_non_column(X))
 
-
 class SeqStrLen(sklearn.preprocessing.FunctionTransformer):
     """Transformer computing the length of a sequence string"""
 
@@ -200,7 +191,6 @@ class SeqStrLen(sklearn.preprocessing.FunctionTransformer):
     ):
         """Constructor"""
         super().__init__(self.__seqlen)
-
     def __seqlen(self, seq_strings: Sequence[str]) -> onp.ndarray:
         """Compute the length of each string in a sequence of strings.
 
@@ -213,7 +203,6 @@ class SeqStrLen(sklearn.preprocessing.FunctionTransformer):
         all_length = [len(seq) for seq in seq_strings]
         return onp.array(all_length, dtype=onp.int32)  # .reshape(-1, 1)
 
-
 class Unirep1900(sklearn.preprocessing.FunctionTransformer):
     """Transformer computing the UniRep 1900 representation of sequence strings"""
 
@@ -221,7 +210,6 @@ class Unirep1900(sklearn.preprocessing.FunctionTransformer):
         """Constructor"""
         # el.strip().strip("*").replace("*", "M")
         super().__init__(lambda x: [get_reps(el.strip())[0].squeeze() for el in x])
-
     def map_func(self, x: Union[pd.DataFrame, ds.Dataset]) -> onp.ndarray:
         """Compute the UniRep 1900 representation of a sequence string.
 
@@ -233,7 +221,6 @@ class Unirep1900(sklearn.preprocessing.FunctionTransformer):
         """
         return get_reps(x["aa_seq"])[0]
 
-
 class Unirep1900Final(sklearn.preprocessing.FunctionTransformer):
     """Transformer computing the UniRep 1900 representation of sequence strings"""
 
@@ -241,7 +228,6 @@ class Unirep1900Final(sklearn.preprocessing.FunctionTransformer):
         """Constructor"""
         # el.strip().strip("*").replace("*", "M")
         super().__init__(lambda x: [get_reps(el.strip())[0].squeeze() for el in x])
-
     def map_func(self, x: Union[pd.DataFrame, ds.Dataset]) -> onp.ndarray:
         """Compute the UniRep 1900 representation of a sequence string.
 
@@ -252,7 +238,6 @@ class Unirep1900Final(sklearn.preprocessing.FunctionTransformer):
             onp.ndarray: The UniRep 1900 representation of the sequence strings.
         """
         return get_reps(x["aa_seq"])[1]
-
 
 class GuaranteeShapeTransformer(BaseEstimator, TransformerMixin):
     """Transformer that guarantees a certain shape of the output."""
@@ -265,7 +250,6 @@ class GuaranteeShapeTransformer(BaseEstimator, TransformerMixin):
         """
         super().__init__()
         self.wrapped = wrapped
-
     def fit(self, X, y=None):
         """Fit the wrapped estimator
 
@@ -275,7 +259,6 @@ class GuaranteeShapeTransformer(BaseEstimator, TransformerMixin):
         """
         self.wrapped.fit(X.reshape(-1, 1))
         return self
-
     def transform(self, X, y=None):
         """Transform the data using the wrapped estimator, then reshape the output.
 
@@ -284,7 +267,6 @@ class GuaranteeShapeTransformer(BaseEstimator, TransformerMixin):
             y (pd.Series): Variable of interest. Defaults to None.
         """
         return self.wrapped.transform(X.reshape(-1, 1)).reshape(X.shape[0], -1)
-
 
 class SeqStrOneHot:
     """Class for one hot encoding of sequence data"""
@@ -303,7 +285,6 @@ class SeqStrOneHot:
         self.padding_char = padding_char
         self.provided = provided
         self.required = required
-
     def __call__(self, X: ds.Dataset) -> dict[str, list[onp.ndarray]]:
         """Function for transforming a new dataframe/dataset with the SeqStrOneHot encoder
 
@@ -320,17 +301,14 @@ class SeqStrOneHot:
         )
         one_hot.fit(seq_strings_to_array(X, True, padding_value_enc).reshape(-1, 1))
         seq_array = seq_strings_to_array(X, True, padding_value_enc)
-        rval = (one_hot.transform(
-                    seq_array.reshape(-1, 1)
-                )
-                .toarray()
-                .reshape(list(seq_array.shape)+ [-1])
-                .astype(onp.uint8).tolist()
-            )
-        return {
-            self.provided: rval
-        }
-
+        rval = (
+            one_hot.transform(seq_array.reshape(-1, 1))
+            .toarray()
+            .reshape(list(seq_array.shape) + [-1])
+            .astype(onp.uint8)
+            .tolist()
+        )
+        return {self.provided: rval}
 
 class NGramFeat(BaseEstimator, TransformerMixin):
     """Transformer for calculating ngrams of the sequence strings in a dataset"""
@@ -359,7 +337,6 @@ class NGramFeat(BaseEstimator, TransformerMixin):
             lowercase=False,
             vocabulary=vocabulary,
         )
-
     def fit(self, X, y=None) -> "NGramFeat":
         """Fit the NGramFeat transformer
 
@@ -371,7 +348,6 @@ class NGramFeat(BaseEstimator, TransformerMixin):
             NGramFeat: The fitted NGramFeat transformer
         """
         return self.cv.fit(X, y)
-
     def transform(self, X, y=None) -> list[onp.ndarray]:
         """Transform the data using the NGramFeat transformer
 
