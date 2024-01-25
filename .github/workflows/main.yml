@@ -7,8 +7,6 @@ on:
   push:  
     branches:
       - main
-  schedule:
-    - cron: '30 0 * * *'
 jobs:
   run_linter:
     runs-on: ubuntu-latest
