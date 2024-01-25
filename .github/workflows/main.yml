@@ -19,6 +19,8 @@ jobs:
           
       - name: Check files using the Ruff linter
         uses: chartboost/ruff-action@v1
+        with:
+          args: "--fix --check"
         
       - name: Check for modified files
         id: git-check
