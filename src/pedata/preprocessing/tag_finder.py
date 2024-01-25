@@ -24,7 +24,6 @@ tag_strip_csv: Strips tags from a .csv file and adds a report of the stripped ta
 clean_dataset: Cleans a huggingface dataset by converting sequences to protein and removing tags.
 """
 
-
 @dataclass
 class ProteinTag:
     """
@@ -74,107 +73,86 @@ class ProteinTag:
             self._type = "Cleavage Site"
         else:
             self._type = "Purification Tag"
-
     @property
     def name(self) -> str:
         """getting name value"""
         return self._name
-
     @name.setter
     def name(self, value: bool):
         """setting name value"""
         self._name = value
-
     @property
     def sequence(self) -> str:
         """getting sequence value"""
         return self._sequence
-
     @sequence.setter
     def sequence(self, value: str):
         """setting sequence value"""
         self._sequence = value
-
     @property
     def origin(self) -> str:
         """getting origin value"""
         return self._origin
-
     @origin.setter
     def origin(self, value: str):
         """setting origin value"""
         self._origin = value
-
     @property
     def method(self) -> str:
         """getting method value"""
         return self._method
-
     @method.setter
     def method(self, value: str):
         """setting origin value"""
         self._method = value
-
     @property
     def reference(self) -> str:
         """getting reference value"""
         return self._reference
-
     @reference.setter
     def reference(self, value: str):
         """setting reference value"""
         self._reference = value
-
     @property
     def length(self) -> int:
         """getting length value"""
         return self._length
-
     @length.setter
     def length(self, value: int):
         """setting length value"""
         self._length = value
-
     @property
     def fusion(self) -> bool:
         """getting fusion value"""
         return self._fusion
-
     @fusion.setter
     def fusion(self, value: bool):
         """setting fusion value"""
         self._fusion = value
-
     @property
     def leader(self) -> bool:
         """getting leader value"""
         return self._leader
-
     @leader.setter
     def leader(self, value: bool):
         """setting leader value"""
         self._leader = value
-
     @property
     def cleavage(self) -> bool:
         """getting cleavage value"""
         return self._cleavage
-
     @cleavage.setter
     def cleavage(self, value: bool):
         """setting cleavage value"""
         self._cleavage = value
-
     @property
     def type(self) -> str:
         """getting type value"""
         return self._type
-
     @type.setter
     def type(self, value: str):
         """setting type value"""
         self._type = value
-
     def __repr__(self):
         """
         A nice print for a ProteinTag.
@@ -204,7 +182,6 @@ class ProteinTag:
             f"Reference: {self.reference}\n"
         )
         return info_string
-
 
 class ProteinTagHit(ProteinTag):
     """
@@ -254,77 +231,62 @@ class ProteinTagHit(ProteinTag):
         self._location = location
         self._identity = identity
         self._conservation = conservation
-
     @property
     def start(self) -> int:
         """getting start value"""
         return self._start
-
     @start.setter
     def start(self, value: int):
         """setting start value"""
         self._start = value
-
     @property
     def end(self) -> int:
         """getting end value"""
         return self._end
-
     @end.setter
     def end(self, value: int):
         """setting end value"""
         self._end = value
-
     @property
     def query_aln(self) -> str:
         """getting query_aln value"""
         return self._query_aln
-
     @query_aln.setter
     def query_aln(self, value: str):
         """setting query_aln value"""
         self._query_aln = value
-
     @property
     def tag_aln(self) -> str:
         """getting tag_aln value"""
         return self._tag_aln
-
     @tag_aln.setter
     def tag_aln(self, value: str):
         """setting tag_aln value"""
         self._tag_aln = value
-
     @property
     def location(self) -> str:
         """getting location value"""
         return self._location
-
     @location.setter
     def location(self, value: str):
         """setting location value"""
         self._location = value
-
     @property
     def identity(self) -> float:
         """getting identity value"""
         return self._identity
-
     @identity.setter
     def identity(self, value: float):
         """setting identity value"""
         self._identity = value
-
     @property
     def conservation(self) -> float:
         """getting conservation value"""
         return self._conservation
-
     @conservation.setter
     def conservation(self, value: float):
         """setting conservation value"""
         self._conservation = value
-
     def __repr__(self) -> str:
         """
         A nice print for a ProteinTagHit.
@@ -358,7 +320,6 @@ class ProteinTagHit(ProteinTag):
             f"Reference: {self.reference}\n"
         )
         return info_string
-
 
 class TagFinder:
     """
@@ -394,27 +355,22 @@ class TagFinder:
                 origin=row["origin"],
                 reference=row["reference"],
             )
-
     @property
     def identity_cutoff(self) -> float:
         """getting identity_cutoff value"""
         return self._identity_cutoff
-
     @identity_cutoff.setter
     def identity_cutoff(self, value: float):
         """setting identity_cutoff value"""
         self._identity_cutoff = value
-
     @property
     def margin_cutoff(self) -> int:
         """getting margin_cutoff value"""
         return self._margin_cutoff
-
     @margin_cutoff.setter
     def margin_cutoff(self, value: int):
         """setting margin_cutoff value"""
         self._margin_cutoff = value
-
     def _add_tag(
         self, name: str, sequence: str, method: str, origin: str, reference: str
     ) -> ProteinTag:
@@ -447,7 +403,6 @@ class TagFinder:
         )
         self._tags.append(tag)
         return tag
-
     def _tag_search(self, tag: ProteinTag, query_seq: str) -> list[ProteinTagHit]:
         """
         Search for a single in a query sequence and return a list of ProteinTagHits.
@@ -500,7 +455,6 @@ class TagFinder:
         if len(hits) == 0:
             return []
         return hits
-
     @staticmethod
     def _tag_hit_overlap(hit1: ProteinTagHit, hit2: ProteinTagHit) -> bool:
         """
@@ -520,7 +474,6 @@ class TagFinder:
             hit1.start <= hit2.start <= hit1.end and hit1.start <= hit2.end <= hit1.end
         )
         return overlap12 or overlap21
-
     def _get_non_redundant_tag_hits(self, sequence: str) -> list[ProteinTagHit]:
         """
         Get non-redundant tags in an input sequence.
@@ -561,7 +514,6 @@ class TagFinder:
             non_redundant += kept_hits
 
         return non_redundant
-
     def _get_termini(
         self, tag_hits: list[ProteinTagHit], sequence: str
     ) -> dict[str, tuple[int, int]]:
@@ -583,7 +535,6 @@ class TagFinder:
             else:
                 limit = self.margin_cutoff
             return distance <= limit
-
         # Find the maximum n-terminus cutoff and minimum c-terminus cutoff
         max_n_terminus = 0
         for h, hit in enumerate(sorted(tag_hits, key=lambda x: x.start)):
@@ -610,7 +561,6 @@ class TagFinder:
             "C-terminus": (min_c_terminus, len(sequence)),
         }
         return termini
-
     def _assign_locations(
         self, tag_hits: list[ProteinTagHit], termini: dict[str, tuple[int, int]]
     ) -> list[ProteinTagHit]:
@@ -668,7 +618,6 @@ class TagFinder:
         combined_hits = n_terminal_hits + c_terminal_hits + internal_hits
         assigned_hits = sorted(combined_hits, key=lambda x: x.start)
         return assigned_hits
-
     @staticmethod
     def _assign_conservation(
         tag_hits: list[ProteinTagHit], query_aln: str, reference_aln: str
@@ -711,7 +660,6 @@ class TagFinder:
             tag.conservation = round(sum(reference_identity) / tag.length * 100, 2)
 
         return tag_hits
-
     def find_tags(
         self,
         sequence: str,
@@ -775,7 +723,6 @@ class TagFinder:
         all_tags = self._assign_locations(tag_hits, termini)
 
         return all_tags, termini
-
     def strip_tags(
         self,
         sequence: str,
@@ -805,7 +752,6 @@ class TagFinder:
         stripped_seq = sequence[termini["N-terminus"][-1] : termini["C-terminus"][0]]
         removed_tags = [tag for tag in tags if tag.location != "Internal"]
         return stripped_seq, removed_tags
-
     @staticmethod
     def _tag_report(removed_tag_list: list[ProteinTagHit], terminus: str) -> str:
         """
@@ -828,7 +774,6 @@ class TagFinder:
         else:
             report_string = " ".join(terminal_tags)
         return report_string
-
     def get_strip_report(self, sequence: str) -> dict:
         """
         Strip tags from a sequence and return a report dictionary of the stripped tags.
@@ -880,7 +825,7 @@ class TagFinder:
             removal_report = f"N-term: {n_terminal_tags} C-term: {c_terminal_tags}"
         else:
             found_tag = False
-            removal_report = f"N-term: None C-term: None"
+            removal_report = "N-term: None C-term: None"
 
         output = {
             "tags_found": found_tag,
@@ -891,7 +836,6 @@ class TagFinder:
         }
 
         return output
-
     def tag_strip_csv(self, input_file: str, output_file: str, col_name: str) -> str:
         """
         Strip terminal purification tags from an input .csv file containing protein sequences.
@@ -954,7 +898,6 @@ class TagFinder:
         print(report)
         dataframe.to_csv(output_file, index=False)
         return output_file
-
     def clean_dataset(
         self,
         dataset: Dataset,
@@ -1020,7 +963,6 @@ class TagFinder:
 
         return dataset
 
-
 class SequenceCleaner:
     """
     This class is used to interface with huggingface datasets. It is a callable class is used for the huggingface .map()
@@ -1065,7 +1007,6 @@ class SequenceCleaner:
         self._tag_locations = []
         self._convert_nucleotide = convert_nucleotide
         self._label_artificial = label_artificial
-
     @staticmethod
     def get_sequence_type(sequence: str) -> str:
         """
@@ -1099,7 +1040,6 @@ class SequenceCleaner:
         else:
             seq_type = "Unknown"
         return seq_type
-
     @staticmethod
     def js_distance(sequence: str) -> float:
         """
@@ -1153,7 +1093,6 @@ class SequenceCleaner:
         )
 
         return js_distance
-
     def convert_sequence(self, sequence: str) -> str:
         """
         Cleans up an input sequence by checking the sequence type and converting to a protein sequence if possible.
@@ -1191,7 +1130,6 @@ class SequenceCleaner:
                 raise TypeError(f"Unknown sequence: {sequence}")
 
         return sequence
-
     def __call__(self, sample):
         """
         The function called by the HuggingFace .map() function.
@@ -1230,7 +1168,6 @@ class SequenceCleaner:
         if report["tags_found"]:
             self._tag_counter += 1
         return sample
-
     def __repr__(self):
         """
         Print a summary of the tag removal across the dataset.
@@ -1269,7 +1206,6 @@ class SequenceCleaner:
             str(pd.DataFrame(self._tag_names)[0].value_counts()).split("\n")[1:-1]
         )
         return map_report
-
 
 if __name__ == "__main__":
     tag_finder = TagFinder()

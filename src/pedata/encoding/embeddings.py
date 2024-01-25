@@ -4,7 +4,6 @@ import ankh
 import esm
 from typing import Iterable
 
-
 class ESM(BaseEstimator, TransformerMixin):
     """
     ESM (Evolutionary Scale Modeling) transformer for sequence transformation using a pre-trained model.
@@ -26,7 +25,6 @@ class ESM(BaseEstimator, TransformerMixin):
 
         self.model, alphabet = esm.pretrained.esm2_t6_8M_UR50D()
         self.tokenizer = alphabet.get_batch_converter()
-
     def fit(self, X):
         """
         Returns the pre-trained model without modifications.
@@ -40,7 +38,6 @@ class ESM(BaseEstimator, TransformerMixin):
         """
 
         return self.model
-
     def transform(self, X: Iterable[str]) -> list:
         """
         Transforms the input sequences into their ESM representations.
@@ -76,7 +73,6 @@ class ESM(BaseEstimator, TransformerMixin):
         # Return the transformed representations
         return model_outputs["representations"][6].numpy().tolist()
 
-
 class Ankh(BaseEstimator, TransformerMixin):
     """
     Ankh transformer for sequence transformation using a pre-trained model.
@@ -102,7 +98,6 @@ class Ankh(BaseEstimator, TransformerMixin):
         """
 
         self.model, self.tokenizer = ankh.load_base_model()
-
     def fit(self, X):
         """
         Returns the pre-trained model without modifications.
@@ -115,7 +110,6 @@ class Ankh(BaseEstimator, TransformerMixin):
             The pre-trained model.
         """
         return self.model
-
     def transform(self, X: Iterable[str]) -> list:
         """
         Transforms the input sequences into their Ankh representations.
@@ -157,7 +151,6 @@ class Ankh(BaseEstimator, TransformerMixin):
         # Return the transformed representations
         return embeddings["last_hidden_state"].numpy().tolist()
 
-
 class AnkhBatched(BaseEstimator, TransformerMixin):
     """
     Ankh batch transformer for sequence transformation using a pre-trained model.
@@ -188,7 +181,6 @@ class AnkhBatched(BaseEstimator, TransformerMixin):
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         self.model, self.tokenizer = ankh.load_base_model()
         self.model = self.model.to(self.device)
-
     def fit(self, X):
         """
         Returns the pre-trained model without modifications.
@@ -201,7 +193,6 @@ class AnkhBatched(BaseEstimator, TransformerMixin):
             The pre-trained model.
         """
         return self.model
-
     def transform(self, X: Iterable[str]) -> list:
         """
         Transforms the input sequences into their Ankh representations.
@@ -235,7 +226,6 @@ class AnkhBatched(BaseEstimator, TransformerMixin):
             )
         output = embeddings["last_hidden_state"].cpu().numpy().tolist()
         return output
-
     def map_func(self, X: Iterable[str]) -> list:
         """
         This supports the batch encoding option of config.encoding_specs.add_encodings method.
