@@ -41,7 +41,6 @@ if RUN_ALL:
 # ========== encoding package ==========
 if True:
     from pedata.encoding import (
-        base,
         embeddings,
         transform,
         transforms_graph,

@@ -8,7 +8,6 @@ from huggingface_hub import (
 )
 from .constants import README_FORMATTING
 
-
 class ReadMe:
     """A class to handle the readme file"""
 
@@ -27,22 +26,18 @@ class ReadMe:
         self._local_dir = os.path.abspath(local_dir)
         self._readme_path = os.path.join(local_dir, "README.md")
         self._readme_content = ""
-
     @property
     def readme_content(self) -> str:
         """The content of the readme"""
         return self._readme_content
-
     @property
     def readme_path(self) -> str:
         """The path to the readme file"""
         return self._readme_path
-
     @property
     def figure_path(self) -> str:
         """The path to the figures"""
         return self._figure_path
-
     @staticmethod
     def insert_section(
         section_start, section_end, updated_section, readme_content
@@ -63,7 +58,6 @@ class ReadMe:
             + updated_section
             + readme_content[section_end:]
         )
-
     @staticmethod
     def write_readme(readme_path, updated_readme_content) -> None:
         """Write the updated readme content to the readme file
@@ -74,11 +68,9 @@ class ReadMe:
         """
         with open(readme_path, "w", encoding="utf-8") as f:
             f.write(updated_readme_content)
-
     def create_readme() -> None:
         # TODO
         pass
-
     def pull_readme_from_hub(self, repo_id: str = None, repo_type="dataset") -> None:
         """Pulls the readme file from the hub into the local directory
 
@@ -104,7 +96,6 @@ class ReadMe:
         # return the path to the readme file
         self._readme_path = os.path.join(self._local_dir, "README.md")
         return self.readme_path
-
     def update_readme(
         self,
         section_elements: list,
@@ -136,7 +127,6 @@ class ReadMe:
             section_start, section_end, updated_section, readme_content
         )
         self.write_readme(self.readme_path, self._readme_content)
-
     def push_readme_to_hub(
         self,
         repo_id: str = None,
@@ -165,7 +155,6 @@ class ReadMe:
         )
         if verbose:
             print(f"Pushed {self.readme_path} to {repo_id}")
-
     def update_readme_figures(
         self,
         figure_path: str = None,
@@ -184,7 +173,6 @@ class ReadMe:
 
         def make_relative_path(base_path, target_path):
             return os.path.relpath(target_path, os.path.dirname(base_path))
-
         if figure_path is None:
             raise ValueError("readme_path must be specified")
 
@@ -213,7 +201,6 @@ class ReadMe:
             section_start, section_end, updated_section, readme_content
         )
         self.write_readme(self.readme_path, self._readme_content)
-
     def push_figures_to_hub(self) -> None:
         """Pushes the figures to the hub"""
         upload_folder(
@@ -222,7 +209,6 @@ class ReadMe:
             repo_id=self.repo_id,
             repo_type=self.repo_type,
         )
-
 
 if __name__ == "__main__":  # FIXME: write command line tool for this
     pass

@@ -18,7 +18,6 @@ dna_example_1_missing_target = {
     "dna_seq": ["GCTCCG", "GCTCCT", "GCGCCG"],
 }
 
-
 dna_example_2_missing_val = {
     "dna_mut": [
         "WT",
@@ -418,7 +417,6 @@ dataset_dict_class = {
     ],
 }
 
-
 class RegressionToyDataset:
     """Toy dataset for regression with the needed encodings"""
 
@@ -435,7 +433,6 @@ class RegressionToyDataset:
             needed_encodings=needed_encodings,
         )
         self._dataset = self._unsplit_dataset.train_test_split(0.2, seed=42)
-
     def __repr__(self):
         return (
             f"RegressionToyDataset(needed_encodings={self.needed_encodings}) \n"
@@ -443,27 +440,22 @@ class RegressionToyDataset:
             f"Train split = {self.train} \n"
             f"Test split = {self.test}"
         )
-
     @property
     def full_dataset(self):
         """Returns the full dataset"""
         return self._unsplit_dataset
-
     @property
     def train_test_split_dataset(self):
         """Returns the split dataset"""
         return self._dataset
-
     @property
     def train(self):
         """Returns the train split of the dataset"""
         return self._dataset["train"]
-
     @property
     def test(self):
         """returns the test split of the dataset"""
         return self._dataset["test"]
-
 
 class ClassificationToyDataset:
     """Toy dataset for regression with the needed encodings"""
@@ -481,7 +473,6 @@ class ClassificationToyDataset:
             needed_encodings=needed_encodings,
         )
         self._dataset = self._unsplit_dataset.train_test_split(0.2, seed=42)
-
     def __repr__(self):
         return (
             f"ClassificationToyDataset(needed_encodings={self.needed_encodings}) \n"
@@ -489,22 +480,18 @@ class ClassificationToyDataset:
             f"Train split = {self.train} \n"
             f"Test split = {self.test}"
         )
-
     @property
     def full_dataset(self):
         """Returns the full dataset"""
         return self._unsplit_dataset
-
     @property
     def train_test_split_dataset(self):
         """Returns the split dataset"""
         return self._dataset
-
     @property
     def train(self):
         """Returns the train split of the dataset"""
         return self._dataset["train"]
-
     @property
     def test(self):
         """returns the test split of the dataset"""

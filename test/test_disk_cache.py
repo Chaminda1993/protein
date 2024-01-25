@@ -15,7 +15,6 @@ from pedata.disk_cache import (
 )
 
 from pedata import (
-    dataset_dict_regression,
     dna_example_1_missing_val,
     dna_example_1_no_missing_val,
     aa_example_0_missing_val,
