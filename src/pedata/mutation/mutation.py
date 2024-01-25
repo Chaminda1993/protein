@@ -616,9 +616,9 @@ class Mutation:
                 # if "aa_mut" in existing_columns:
                     # mut_column = "aa_mut"
 
-            if "dna_seq" in existing_columns:
-                if "dna_mut" in existing_columns:
-                    mut_column = "dna_mut"
+            # if "dna_seq" in existing_columns:
+                # if "dna_mut" in existing_columns:
+                    # mut_column = "dna_mut"
 
             # Validate dataset
             check_dataset(mut)
