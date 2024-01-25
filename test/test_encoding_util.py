@@ -12,7 +12,7 @@ class EncodingSpec:
 class TestEncodingUtil:
     def test_find_function_order(self):
         # Temporary encoding functions for tests
-        f1 = def x: x
+        f1 = lambda x: x
         f2 = def x: None
         f3 = def x: 1
         f4 = def x: x

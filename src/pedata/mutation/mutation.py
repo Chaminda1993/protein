@@ -606,7 +606,7 @@ class Mutation:
 
         """
 
-        input_mut = mut  # Stores the original dataset before further modifications
+        # input_mut = mut  # Stores the original dataset before further modifications
 
         # Handle Dataset input
         if isinstance(mut, ds.Dataset):
