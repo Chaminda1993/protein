@@ -67,5 +67,5 @@ dataset = append_summary_variable(
     summary_variable_name="target summary variable",
 )
 
-print("dataset with summary variables:")
+print("dataset with summary variables :")
 print(f"{dataset.to_pandas().head(10)}")

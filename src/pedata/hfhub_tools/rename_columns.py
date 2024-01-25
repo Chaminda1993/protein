@@ -50,7 +50,7 @@ def rename_hub_dataset_column(repo_id: str, column_name_mapping: dict[str:str]) 
 def validate_dataset_columns_names():
     # TODO: implement and use while creating dataset in upload.py and preprocess dataset
     """Check that the column names do not contain any forbidden characters"""
-    forbidden_characters = [" ", "/", "."]
+    # forbidden_characters = [" ", "/", "."]
     pass
 
 

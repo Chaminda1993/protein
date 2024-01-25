@@ -221,8 +221,8 @@ class DatasetUpload:  # FIXME: change the name of this class
     def __repr__(self) -> None:
         """Print the processing to be done or the processing done."""
 
-        def print_list(l):
-            return "\n".join([f" - {item}" for item in l])
+        def print_list(lx):
+            return "\n".join([f" - {item}" for item in lx])
 
         if "_dataset" not in self.__dict__:
             return f"""

@@ -606,19 +606,19 @@ class Mutation:
 
         """
 
-        input_mut = mut  # Stores the original dataset before further modifications
+        # input_mut = mut  # Stores the original dataset before further modifications
 
         # Handle Dataset input
         if isinstance(mut, ds.Dataset):
             # Find all existig columns
-            existing_columns = set(mut.features.keys())
-            if "aa_seq" in existing_columns:
-                if "aa_mut" in existing_columns:
-                    mut_column = "aa_mut"
+            # existing_columns = set(mut.features.keys())
+            # if "aa_seq" in existing_columns:
+                # if "aa_mut" in existing_columns:
+                    # mut_column = "aa_mut"
 
-            if "dna_seq" in existing_columns:
-                if "dna_mut" in existing_columns:
-                    mut_column = "dna_mut"
+            # if "dna_seq" in existing_columns:
+                # if "dna_mut" in existing_columns:
+                    # mut_column = "dna_mut"
 
             # Validate dataset
             check_dataset(mut)
@@ -627,8 +627,8 @@ class Mutation:
             )
 
             # Check if parsed mutation is empty
-            if len(parsed_mut) == 0:
-                raise ValueError(f"No parsed mutations found in dataset: \n{input_mut}")
+            # if len(parsed_mut) == 0:
+            #     raise ValueError(f"No parsed mutations found in dataset: \n{input_mut}")
 
             mut = Mutation.concat_mutations(parsed_mut)
 
