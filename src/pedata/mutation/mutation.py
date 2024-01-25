@@ -606,7 +606,7 @@ class Mutation:
 
         """
 
-        input_mut = mut  # Stores the original dataset before further modifications
+        # input_mut = mut  # Stores the original dataset before further modifications
 
         # Handle Dataset input
         if isinstance(mut, ds.Dataset):
@@ -627,8 +627,8 @@ class Mutation:
             )
 
             # Check if parsed mutation is empty
-            if len(parsed_mut) == 0:
-                raise ValueError(f"No parsed mutations found in dataset: \n{input_mut}")
+            # if len(parsed_mut) == 0:
+            #     raise ValueError(f"No parsed mutations found in dataset: \n{input_mut}")
 
             mut = Mutation.concat_mutations(parsed_mut)
 
