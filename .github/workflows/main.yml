@@ -1,4 +1,4 @@
-name: Lint
+name: Lint on action
 on: 
   pull_request:
     types:
