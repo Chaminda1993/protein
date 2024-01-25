@@ -81,7 +81,7 @@ def test_check_dataset():
             "target foo": [1, 2],
         }
     )
-    assert integrity.check_dataset(valid_dataset) None
+    assert integrity.check_dataset(valid_dataset) is None
 
     # Test case 13: Missing column starting with keyword "target"
     invalid_dataset = ds.Dataset.from_dict(
