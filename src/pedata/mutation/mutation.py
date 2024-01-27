@@ -5,6 +5,7 @@ The different methods allow to return the mutation saved as Named Tuple objects 
 The `Mut` objects are defined in `pedata.constants` module and contain information about the mutation (position, source, target).
 
 """
+
 from typing import Callable
 import re
 import datasets as ds
@@ -55,6 +56,7 @@ class Mutation:
             return sorted_mutations
 
         return mut  # Mutations are already ordered, return the original list
+
     @staticmethod
     def parse_variant_mutations(
         changes: str,
@@ -116,6 +118,7 @@ class Mutation:
         mutations = [convert_tuple_to_valid_namedtuple(m) for m in mutations]
 
         return mutations
+
     @staticmethod
     def parse_all_mutations(
         dataset: ds.Dataset,
@@ -188,6 +191,7 @@ class Mutation:
                 )
 
         return parsed, non_parsed_idx
+
     @staticmethod
     def combine_variant_mutations(
         mut1: list[Mut], mut2: list[Mut], check_validity: bool = True
@@ -268,6 +272,7 @@ class Mutation:
         combined_mutations = Mutation.sort_mutations_by_pos(combined_mutations)
 
         return combined_mutations
+
     @staticmethod
     def generate_variant_mutation_combinations(
         variants1: list[Mut], variants2: list[Mut]
@@ -317,6 +322,7 @@ class Mutation:
 
         # Return combined mutations
         return combined_mutations
+
     @staticmethod
     def generate_variant_mutation_combinations_within_dataset(
         mut: list[Mut],
@@ -383,6 +389,7 @@ class Mutation:
                 rval.append(combined_mutations)
 
         return rval  # Return the final list containing all possible combinations
+
     @staticmethod
     def concat_mutations(mut: list[list[Mut]]) -> list[Mut]:
         """
@@ -411,6 +418,7 @@ class Mutation:
             rval.extend(m)
 
         return rval
+
     @staticmethod
     def get_parent_aa_seq(
         dataset: ds.Dataset, return_bool=False, return_idx=False
@@ -479,6 +487,7 @@ class Mutation:
             return wildtype_idx
         else:
             return dataset[seq_column][wildtype_idx]
+
     @staticmethod
     def get_parent_sketch_from_mutations(
         mut: list[Mut], fill_character: str = "*"
@@ -555,6 +564,7 @@ class Mutation:
 
         # Return the number of positions filled and the resulting parent sketch string
         return num_mut_pos, parent_sketch
+
     @staticmethod
     def estimate_offset(
         mut: list[Mut] | ds.Dataset,
@@ -714,6 +724,7 @@ class Mutation:
                     f"When processing mutation codes, multiple offsets seem to be plausible: {rval['offset']}. Cannot automaticcally decide for an offset."
                 )
             return rval["offset"][0]
+
     @staticmethod
     def apply_variant_mutations(
         mutations: list[Mut], parent: str, offset: int = 0, check_validity: bool = False
@@ -761,6 +772,7 @@ class Mutation:
             seq = seq[:pos] + m.targ + seq[pos + 1 :]
 
         return seq  # Return the mutated sequence
+
     @staticmethod
     def apply_all_mutations(
         mutations: ds.Dataset | list[list[Mut]],

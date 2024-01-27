@@ -1,4 +1,5 @@
 """ The mutation_extractor module contains functions for extracting mutations from sequences."""
+
 from typing import Iterable
 from ..constants import Mut
 from .mutation_util import convert_tuple_to_valid_namedtuple

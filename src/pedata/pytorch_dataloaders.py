@@ -16,6 +16,7 @@ class Transformer:
         Initializes the transformer.
         """
         pass
+
     def transform(self, x: Union[torch.Tensor, numpy.ndarray, list]) -> torch.Tensor:
         """
         Returns the input as it is. Removes unnecessary dimensions.
@@ -72,6 +73,7 @@ class Encoder:
             self.transformer = Transformer()
         else:
             self.transformer = transformer
+
     def transform(self, x: dict) -> torch.Tensor:
         """
         Returns the transformed input data.
@@ -134,6 +136,7 @@ class Dataloader(torch.utils.data.Dataset):
             self.shuffle_map = list(range(len(dataset) - 1))
         else:
             self.shuffle_map = list(range(len(dataset)))
+
     def __len__(self) -> int:
         """
         Returns the length of the dataset.
@@ -142,6 +145,7 @@ class Dataloader(torch.utils.data.Dataset):
             The length of the dataset.
         """
         return math.ceil(len(self.dataset) / self.batch_size)
+
     def _get_encoder(self, embedding_name: str) -> Encoder:
         """
         Returns the encoder for the given embedding name.
@@ -171,6 +175,7 @@ class Dataloader(torch.utils.data.Dataset):
             encoder = Encoder(in_embedding_name=embedding_name)
 
         return encoder
+
     def _get_encoders(self) -> list[Encoder]:
         """
         Returns the encoders for the given embedding names.
@@ -182,6 +187,7 @@ class Dataloader(torch.utils.data.Dataset):
         for embedding_name in self.embedding_names:
             encoders.append(self._get_encoder(embedding_name))
         return encoders
+
     def __getitem__(self, index: int) -> dict[str, torch.Tensor]:
         """
         Returns the batch data for the given index.
