@@ -3,9 +3,7 @@ from datasets import Dataset
 import os
 from pathlib import Path
 import pytest
-from pedata.disk_cache import (
-    preprocess_data,
-    load_similarity,
+
     get_missing_values,
     fill_missing_sequences,
     hfds_from_pydict,
