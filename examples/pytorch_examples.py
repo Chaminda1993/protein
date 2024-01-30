@@ -1,15 +1,16 @@
 from pedata.pytorch_dataloaders import Dataloader
 from datasets import load_dataset
 import torch
+import pandas
 
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 print(f"======== Using device: {device} =======")
-dataset = load_dataset("Exazyme/TemStaPro-Minor-bal65", split="testing[:50]")
+dataset = load_dataset (                  "Exazyme/TemStaPro-Minor-bal65", split="testing[:50]")
 
 # train mod
 dataloader = Dataloader(
     dataset=dataset,
-    embedding_names=["ankh", "aa_1hot"],
+    embedding_names=                  [                         "ankh", "aa_1hot"],
     targets=["growth_temp"],
     batch_size=8,
     device=device,
