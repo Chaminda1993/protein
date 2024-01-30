@@ -1,7 +1,6 @@
 from pedata.pytorch_dataloaders import Dataloader
 from datasets import load_dataset
 import torch
-import pandas
 
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 print(f"======== Using device: {device} =======")
