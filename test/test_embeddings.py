@@ -6,12 +6,12 @@ from pytest import fixture
 
 
 @fixture(scope="session")
-def esm():
+def esm     ():
     return ESM()
 
 
 @fixture(scope="session")
-def ankh():
+def ankh()     :
     return Ankh()
 
 
