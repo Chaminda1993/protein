@@ -140,6 +140,7 @@ class FixedSingleColumnTransform(TransformerMixin):
         self.inner_transformer = inner_transformer
         if hasattr(self.inner_transformer, "map_func"):
             self.map_func = self.inner_transformer.map_func
+
     def drop_non_column(
         self, X: Union[pd.DataFrame, ds.Dataset]
     ) -> Union[pd.DataFrame, ds.Dataset]:
@@ -157,6 +158,7 @@ class FixedSingleColumnTransform(TransformerMixin):
             return X[self.column_name]
         else:
             return X
+
     def fit(
         self, X: Union[pd.DataFrame, ds.Dataset], **fit_params
     ) -> "FixedSingleColumnTransform":
@@ -170,6 +172,7 @@ class FixedSingleColumnTransform(TransformerMixin):
         """
         self.inner_transformer.fit(self.drop_non_column(X), **fit_params)
         return self.__class__
+
     def transform(
         self, X: Union[pd.DataFrame, ds.Dataset]
     ) -> Union[pd.DataFrame, ds.Dataset]:
@@ -191,6 +194,7 @@ class SeqStrLen(sklearn.preprocessing.FunctionTransformer):
     ):
         """Constructor"""
         super().__init__(self.__seqlen)
+
     def __seqlen(self, seq_strings: Sequence[str]) -> onp.ndarray:
         """Compute the length of each string in a sequence of strings.
 
@@ -210,6 +214,7 @@ class Unirep1900(sklearn.preprocessing.FunctionTransformer):
         """Constructor"""
         # el.strip().strip("*").replace("*", "M")
         super().__init__(lambda x: [get_reps(el.strip())[0].squeeze() for el in x])
+
     def map_func(self, x: Union[pd.DataFrame, ds.Dataset]) -> onp.ndarray:
         """Compute the UniRep 1900 representation of a sequence string.
 
@@ -228,6 +233,7 @@ class Unirep1900Final(sklearn.preprocessing.FunctionTransformer):
         """Constructor"""
         # el.strip().strip("*").replace("*", "M")
         super().__init__(lambda x: [get_reps(el.strip())[0].squeeze() for el in x])
+
     def map_func(self, x: Union[pd.DataFrame, ds.Dataset]) -> onp.ndarray:
         """Compute the UniRep 1900 representation of a sequence string.
 
@@ -250,6 +256,7 @@ class GuaranteeShapeTransformer(BaseEstimator, TransformerMixin):
         """
         super().__init__()
         self.wrapped = wrapped
+
     def fit(self, X, y=None):
         """Fit the wrapped estimator
 
@@ -259,6 +266,7 @@ class GuaranteeShapeTransformer(BaseEstimator, TransformerMixin):
         """
         self.wrapped.fit(X.reshape(-1, 1))
         return self
+
     def transform(self, X, y=None):
         """Transform the data using the wrapped estimator, then reshape the output.
 
@@ -285,6 +293,7 @@ class SeqStrOneHot:
         self.padding_char = padding_char
         self.provided = provided
         self.required = required
+
     def __call__(self, X: ds.Dataset) -> dict[str, list[onp.ndarray]]:
         """Function for transforming a new dataframe/dataset with the SeqStrOneHot encoder
 
@@ -337,6 +346,7 @@ class NGramFeat(BaseEstimator, TransformerMixin):
             lowercase=False,
             vocabulary=vocabulary,
         )
+
     def fit(self, X, y=None) -> "NGramFeat":
         """Fit the NGramFeat transformer
 
@@ -348,6 +358,7 @@ class NGramFeat(BaseEstimator, TransformerMixin):
             NGramFeat: The fitted NGramFeat transformer
         """
         return self.cv.fit(X, y)
+
     def transform(self, X, y=None) -> list[onp.ndarray]:
         """Transform the data using the NGramFeat transformer
 

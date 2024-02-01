@@ -1,4 +1,5 @@
 """ The mutation_converter module contains functions for converting a mutation object type into another type."""
+
 import numpy as np
 from ..integrity import check_mutation_namedtuple
 from ..constants import Mut
