@@ -33,6 +33,7 @@ class DatasetSplitter(ABC):
         """
         self._seed = seed
         self.append_split_col = append_split_col
+
     @property
     @abstractmethod
     def split_col_name(self) -> str:
@@ -41,12 +42,14 @@ class DatasetSplitter(ABC):
             The name of the column containing the split name"""
         raise NotImplementedError
         return "awesome_split"
+
     @abstractmethod
     def _split(
         self,
     ) -> DatasetDict:
         """Implementing the dataset split method"""
         raise NotImplementedError
+
     def split(
         self, dataset: DatasetDict | Dataset, return_dataset_dict=True
     ) -> DatasetDict | Dataset:
@@ -88,6 +91,7 @@ class DatasetSplitter(ABC):
             self._dataset = self.concatenated_dataset(self._split_dataset)
 
         return self.dataset
+
     @staticmethod
     def _dataset_check(dataset: DatasetDict | Dataset):
         """Checking if the dataset is a Dataset or a DatasetDict of only one split
@@ -111,12 +115,14 @@ class DatasetSplitter(ABC):
                     f"Here the dataset contains {len(dataset)} splits: "
                     f"{[split for split in dataset]}"
                 )
+
     def _dataset_preprocessing(self, dataset: Dataset | DatasetDict) -> None:
         """Makes sure that ._dataset is a Dataset"""
         if isinstance(dataset, DatasetDict):
             dataset = self.concatenated_dataset(dataset)
 
         self._dataset = dataset
+
     @property
     def dataset(self) -> Dataset | DatasetDict:
         """Return the dataset.
@@ -130,6 +136,7 @@ class DatasetSplitter(ABC):
             return self._split_dataset
         else:
             return self._dataset
+
     @staticmethod
     def split_dataset_using_split_column(
         dataset: Dataset, split_col_name: str
@@ -151,6 +158,7 @@ class DatasetSplitter(ABC):
         for split in splits:
             split_dataset[split] = dataset.filter(lambda x: x[split_col_name] == split)
         return split_dataset
+
     @staticmethod
     def concatenated_dataset(
         dataset: DatasetDict, split_list: list[str] = []
@@ -173,6 +181,7 @@ class DatasetSplitter(ABC):
         return concatenate_datasets(
             [dataset[split] for split in dataset if split in split_list]
         )
+
     @staticmethod
     def _append_split_column(dataset: DatasetDict, split_col_name: str) -> DatasetDict:
         """Add a column to the dataset with the name of the split.
@@ -190,6 +199,7 @@ class DatasetSplitter(ABC):
             dataset[split_name] = dataset_split.add_column(split_col_name, split_col)
 
         return dataset
+
     @staticmethod
     def yield_all_train_test_sets(
         dataset: DatasetDict, combined_n: int = 1
@@ -284,12 +294,14 @@ class DatasetSplitterRandomTrainTest(DatasetSplitter):
         super().__init__(
             seed=seed,
         )
+
     @property
     def split_col_name(self) -> str:
         """Abstract method returning the name of the column containing the split name
         Retunrs:
             The name of the column containing the split name"""
         return "random_split_train_0_8_test_0_2"
+
     def _split(
         self,
     ) -> DatasetDict:
@@ -329,12 +341,14 @@ class DatasetSplitterRandomKFold(DatasetSplitter):
             seed=seed,
         )
         self.k = k
+
     @property
     def split_col_name(self) -> str:
         """Abstract method returning the name of the column containing the split name
         Retunrs:
             The name of the column containing the split name"""
         return f"random_split_{self.k}_fold"
+
     def _split(
         self,
     ) -> DatasetDict:

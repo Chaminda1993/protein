@@ -1,4 +1,5 @@
 """Specify folder structure for the project"""
+
 import os
 from pathlib import Path
 

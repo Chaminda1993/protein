@@ -109,6 +109,7 @@ def find_function_order(
                     )
 
                 check_function(encoding_functions[encoding])
+
     def check_function(function: Callable):
         """
         Check if all function's encodings meet their requirements.

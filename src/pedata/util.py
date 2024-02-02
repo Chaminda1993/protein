@@ -10,6 +10,7 @@ The util module contains utility functions for HuggingFace datasets such as:
 
 ============ util.py ===========
 """
+
 from typing import Callable, Sequence, Literal, Optional
 from dataclasses import dataclass
 import datasets as ds
@@ -535,6 +536,7 @@ class DatasetHandler(object):
             else:
                 end_idx = start_idx + 1
             self.idx[feat] = slice(start_idx, end_idx)
+
     def cat(self, hf_ds: Dataset) -> torch.Tensor:
         """Return concatenated tensor with all features and most general type.
         Args:
@@ -560,14 +562,17 @@ class DatasetHandler(object):
         hf_ds = hf_ds.with_format("torch")
         conc_tensor = torch.cat(
             [
-                hf_ds[k].reshape(len(hf_ds[k]), -1)
-                if len(self.metadata[k]["shape"]) > 1
-                else hf_ds[k][:, None]
+                (
+                    hf_ds[k].reshape(len(hf_ds[k]), -1)
+                    if len(self.metadata[k]["shape"]) > 1
+                    else hf_ds[k][:, None]
+                )
                 for k in self.features
             ],
             dim=-1,
         ).to(torch.float64)
         return conc_tensor
+
     def get(self, t: torch.Tensor, *feat: list[str]) -> torch.Tensor:
         """Return the feature(s) in the concatenated tensor in concatenation axis (i.e. the last axis).
         Args:
@@ -587,6 +592,7 @@ class DatasetHandler(object):
 
         """
         return t[..., self.dims(feat)]
+
     def dims(self, feat: list[str]) -> tuple[int]:
         """Return the dimensions of the feature(s) in the concatenated tensor in concatenation axis (i.e. the last axis).
 

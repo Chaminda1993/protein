@@ -23,6 +23,7 @@ residues in the active sites:
 homology: highly conserved residues could be critical for the folding and modifying there could be a bad idea - but not necessarily
 
 """
+
 import matplotlib.pyplot as plt
 import numpy as np
 import os
